@@ -35,7 +35,27 @@ export default function Providers({ children }: { children: React.ReactNode }) {
               routerProvider={routerProvider}
               dataProvider={dataProvider(supabaseClient)}
               liveProvider={liveProvider(supabaseClient)}
-              resources={[]}
+              resources={[
+                {
+                  name: "services",
+                  list: "/admin/services",
+                  create: "/admin/services/new",
+                  edit: "/admin/services/:id",
+                  meta: { label: "Services" },
+                },
+                {
+                  name: "articles",
+                  list: "/admin/articles",
+                  create: "/admin/articles/new",
+                  edit: "/admin/articles/:id",
+                  meta: { label: "Articles" },
+                },
+                {
+                  name: "clinic_images",
+                  list: "/admin/clinic-images",
+                  meta: { label: "Clinic Images" },
+                },
+              ]}
               options={{
                 syncWithLocation: true,
                 warnWhenUnsavedChanges: true,

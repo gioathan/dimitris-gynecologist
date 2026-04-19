@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+/* Admin panel dark theme - scoped to /admin routes */
+[data-admin="true"] {
+  background: #0a0a0a !important;
+  color: #ededed !important;
+}
+
+[data-admin="true"] .ant-table {
+  background: #141414 !important;
+  color: #ededed !important;
+}
+
+[data-admin="true"] .ant-table-thead > tr > th {
+  background: #1a1a1a !important;
+  color: #ededed !important;
+  border-bottom: 1px solid #2a2a2a !important;
+}
+
+[data-admin="true"] .ant-table-tbody > tr > td {
+  border-bottom: 1px solid #1a1a1a !important;
+  color: #ededed !important;
+}
+
+[data-admin="true"] .ant-table-tbody > tr:hover > td {
+  background: #1a1a1a !important;
+}
+
+[data-admin="true"] .ant-card {
+  background: #141414 !important;
+  border-color: #2a2a2a !important;
+}
+
+[data-admin="true"] .ant-card-head {
+  color: #ededed !important;
+  border-bottom-color: #2a2a2a !important;
+}
+
+[data-admin="true"] .ant-card-head-title {
+  color: #ededed !important;
+}
+
+[data-admin="true"] .ant-form-item-label > label {
+  color: #ededed !important;
+}
+
+[data-admin="true"] .ant-form-item-extra,
+[data-admin="true"] .ant-form-item-explain {
+  color: #888 !important;
+}
+
+[data-admin="true"] .ant-input,
+[data-admin="true"] .ant-input-number,
+[data-admin="true"] .ant-input-number-input,
+[data-admin="true"] .ant-select-selector,
+[data-admin="true"] textarea.ant-input {
+  background: #1a1a1a !important;
+  border-color: #3a3a3a !important;
+  color: #ededed !important;
+}
+
+[data-admin="true"] .ant-input:focus,
+[data-admin="true"] .ant-input-number:focus,
+[data-admin="true"] .ant-select-selector:focus,
+[data-admin="true"] textarea.ant-input:focus {
+  background: #1a1a1a !important;
+  border-color: #1890ff !important;
+  color: #ededed !important;
+}
+
+[data-admin="true"] .ant-input::placeholder,
+[data-admin="true"] .ant-input-number::placeholder,
+[data-admin="true"] textarea.ant-input::placeholder {
+  color: #666 !important;
+}
+
+[data-admin="true"] .ant-btn-default {
+  background: #1a1a1a !important;
+  border-color: #3a3a3a !important;
+  color: #ededed !important;
+}
+
+[data-admin="true"] .ant-btn-default:hover {
+  background: #2a2a2a !important;
+  border-color: #4a4a4a !important;
+  color: #fff !important;
+}
+
+[data-admin="true"] .ant-btn-primary {
+  background: #1890ff !important;
+  border-color: #1890ff !important;
+}
+
+[data-admin="true"] .ant-btn-dangerous {
+  background: #ff4d4f !important;
+  border-color: #ff4d4f !important;
+}
+
+[data-admin="true"] .ant-switch {
+  background: #3a3a3a !important;
+}
+
+[data-admin="true"] .ant-switch-checked {
+  background: #1890ff !important;
+}
+
+[data-admin="true"] .ant-statistic-title {
+  color: #888 !important;
+}
+
+[data-admin="true"] .ant-statistic-content {
+  color: #ededed !important;
+}
+
+[data-admin="true"] .ant-tag {
+  background: #1a1a1a !important;
+  border-color: #3a3a3a !important;
+  color: #ededed !important;
+}
+
+[data-admin="true"] h1,
+[data-admin="true"] h2,
+[data-admin="true"] h3,
+[data-admin="true"] h4,
+[data-admin="true"] h5,
+[data-admin="true"] h6 {
+  color: #ededed !important;
+}

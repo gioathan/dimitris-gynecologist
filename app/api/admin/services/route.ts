@@ -38,6 +38,6 @@ export async function POST(request: Request) {
     );
   }
 
-  revalidateTag("services");
+  revalidateTag("services", "default");
   return NextResponse.json(service);
 }

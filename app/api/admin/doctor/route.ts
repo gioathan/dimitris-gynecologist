@@ -25,6 +25,6 @@ export async function PUT(request: Request) {
     : await db.from("doctor").insert([payload]);
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
-  revalidateTag("doctor");
+  revalidateTag("doctor", "default");
   return NextResponse.json({ success: true });
 }

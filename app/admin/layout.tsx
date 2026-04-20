@@ -14,6 +14,7 @@ import {
   FileTextOutlined,
   SettingOutlined,
   HomeOutlined,
+  BuildOutlined,
 } from "@ant-design/icons";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -62,6 +63,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { href: "/admin/homepage", label: "Homepage", icon: <HomeOutlined /> },
     { href: "/admin/doctor", label: "Doctor", icon: <UserOutlined /> },
     { href: "/admin/clinic-images", label: "Clinic Images", icon: <PictureOutlined /> },
+    { href: "/admin/facilities", label: "Facilities", icon: <BuildOutlined /> },
     { href: "/admin/services", label: "Services", icon: <AppstoreOutlined /> },
     { href: "/admin/articles", label: "Articles", icon: <FileTextOutlined /> },
     { href: "/admin/site-settings", label: "Site Settings", icon: <SettingOutlined /> },

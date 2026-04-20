@@ -13,6 +13,6 @@ export async function PUT(request: Request) {
   const { error } = await db.from("site_settings").upsert(upserts, { onConflict: "key" });
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
-  revalidateTag("site_settings");
+  revalidateTag("site_settings", "default");
   return NextResponse.json({ success: true });
 }

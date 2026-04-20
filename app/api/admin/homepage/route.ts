@@ -24,6 +24,6 @@ export async function PUT(request: Request) {
     : await db.from("homepage_content").insert([payload]);
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
-  revalidateTag("homepage");
+  revalidateTag("homepage", "default");
   return NextResponse.json({ success: true });
 }

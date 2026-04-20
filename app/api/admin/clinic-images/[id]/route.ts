@@ -18,7 +18,7 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
 
   const { error } = await db.from("clinic_images").delete().eq("id", id);
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
-  revalidateTag("clinic_images");
+  revalidateTag("clinic_images", "default");
   return NextResponse.json({ success: true });
 }
 
@@ -34,6 +34,6 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
     .eq("id", id);
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
-  revalidateTag("clinic_images");
+  revalidateTag("clinic_images", "default");
   return NextResponse.json({ success: true });
 }

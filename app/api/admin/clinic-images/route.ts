@@ -18,6 +18,6 @@ export async function POST(request: Request) {
     .single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
-  revalidateTag("clinic_images");
+  revalidateTag("clinic_images", "default");
   return NextResponse.json(data);
 }

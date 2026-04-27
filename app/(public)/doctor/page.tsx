@@ -59,14 +59,14 @@ export default async function DoctorPage() {
                 {doctor.bio}
               </p>
             )}
-            <div className="grid grid-cols-2 gap-4 mt-10 max-w-sm">
-              <div className="bg-surface-container p-6 rounded-2xl">
+            <div className="grid grid-cols-2 gap-4 mt-10">
+              <div className="bg-surface-container p-4 rounded-2xl">
                 <span className="material-symbols-outlined text-3xl text-primary block mb-2" style={{ fontVariationSettings: "'FILL' 1" }}>favorite</span>
-                <span className="text-xs font-bold uppercase tracking-wider text-on-surface-variant">Εξατομικευμένη Φροντίδα</span>
+                <span className="text-xs font-bold uppercase tracking-wide text-on-surface-variant">Εξατομικευμένη Φροντίδα</span>
               </div>
-              <div className="bg-primary-fixed/40 p-6 rounded-2xl">
+              <div className="bg-primary-fixed/40 p-4 rounded-2xl">
                 <span className="material-symbols-outlined text-3xl text-secondary block mb-2" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
-                <span className="text-xs font-bold uppercase tracking-wider text-on-surface-variant">Σύγχρονες Μέθοδοι</span>
+                <span className="text-xs font-bold uppercase tracking-wide text-on-surface-variant">Σύγχρονες Μέθοδοι</span>
               </div>
             </div>
           </div>

@@ -1,11 +1,70 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const reasons = [
+  "Γενική Ερώτηση",
+  "Κλείσιμο Ραντεβού",
+  "Αποτελέσματα Εξετάσεων",
+  "Πληροφορίες Υπηρεσιών",
+];
+
+function ReasonSelect({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className="w-full bg-surface-container-highest rounded-xl p-4 text-sm text-left flex items-center justify-between gap-2 focus:outline-none focus:ring-2 focus:ring-secondary transition-all"
+      >
+        <span className={value ? "text-on-surface" : "text-on-surface-variant/50"}>{value || "Επιλέξτε λόγο επικοινωνίας"}</span>
+        <span
+          className="material-symbols-outlined text-on-surface-variant text-[20px] transition-transform duration-200 shrink-0"
+          style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
+        >
+          expand_more
+        </span>
+      </button>
+
+      {open && (
+        <ul className="absolute z-50 mt-1.5 w-full bg-surface-container-highest rounded-xl shadow-lg shadow-black/10 overflow-hidden border border-outline-variant/20">
+          {reasons.map((r) => (
+            <li key={r}>
+              <button
+                type="button"
+                onClick={() => { onChange(r); setOpen(false); }}
+                className={`w-full text-left px-4 py-3.5 text-sm transition-colors ${
+                  value === r
+                    ? "bg-primary/10 text-primary font-semibold"
+                    : "text-on-surface hover:bg-surface-container"
+                }`}
+              >
+                {r}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 export default function ContactForm() {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [reason, setReason] = useState(reasons[0]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -15,7 +74,7 @@ export default function ContactForm() {
     const data = {
       name: (form.elements.namedItem("name") as HTMLInputElement).value,
       email: (form.elements.namedItem("email") as HTMLInputElement).value,
-      reason: (form.elements.namedItem("reason") as HTMLSelectElement).value,
+      reason,
       message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
     };
     try {
@@ -68,12 +127,7 @@ export default function ContactForm() {
       </div>
       <div className="space-y-2">
         <label className="text-xs font-bold text-on-surface-variant ml-1">Λόγος Επικοινωνίας</label>
-        <select name="reason" className={inputClass}>
-          <option value="">Γενική Ερώτηση</option>
-          <option value="Κλείσιμο Ραντεβού">Κλείσιμο Ραντεβού</option>
-          <option value="Αποτελέσματα Εξετάσεων">Αποτελέσματα Εξετάσεων</option>
-          <option value="Πληροφορίες Υπηρεσιών">Πληροφορίες Υπηρεσιών</option>
-        </select>
+        <ReasonSelect value={reason} onChange={setReason} />
       </div>
       <div className="space-y-2">
         <label className="text-xs font-bold text-on-surface-variant ml-1">Μήνυμα</label>

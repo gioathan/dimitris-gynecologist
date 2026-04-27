@@ -77,7 +77,7 @@ export default async function HomePage() {
             {homepage?.hero_image_url ? (
               <>
                 {/* Mobile floating */}
-                <div className="lg:hidden absolute -right-10 top-0 w-52 h-72 rounded-3xl overflow-hidden rotate-3 editorial-shadow">
+                <div className="hidden absolute -right-10 top-0 w-52 h-72 rounded-3xl overflow-hidden rotate-3 editorial-shadow">
                   <Image src={homepage.hero_image_url} alt="Ιατρείο" fill className="object-cover" sizes="208px" />
                 </div>
                 {/* Desktop clean */}

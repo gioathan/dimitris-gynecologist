@@ -8,9 +8,9 @@ import Logo from "./Logo";
 const navItems = [
   { href: "/", label: "Αρχική" },
   { href: "/doctor", label: "Ιατρός" },
+  { href: "/clinic", label: "Ιατρείο" },
   { href: "/services", label: "Υπηρεσίες" },
   { href: "/articles", label: "Άρθρα" },
-  { href: "/clinic", label: "Ιατρείο" },
 ];
 
 export default function Header() {

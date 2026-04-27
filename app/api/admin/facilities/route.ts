@@ -33,6 +33,6 @@ export async function POST(request: Request) {
     .single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
-  revalidateTag("facilities");
+  revalidateTag("facilities", "default");
   return NextResponse.json(data);
 }

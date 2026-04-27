@@ -20,7 +20,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
     .eq("id", id);
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
-  revalidateTag("facilities");
+  revalidateTag("facilities", "default");
   return NextResponse.json({ success: true });
 }
 
@@ -31,6 +31,6 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
   const { id } = await params;
   const { error } = await createAdminClient().from("facilities").delete().eq("id", id);
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
-  revalidateTag("facilities");
+  revalidateTag("facilities", "default");
   return NextResponse.json({ success: true });
 }

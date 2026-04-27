@@ -158,7 +158,7 @@ export default function FacilitiesPage() {
                     <p style={{ margin: 0, color: "#888", fontSize: 12 }}>{f.description}</p>
                   </div>
                 </div>
-                <div style={{ display: "flex", gap: 8, shrink: 0 }}>
+                <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
                   <Button icon={<EditOutlined />} size="small" onClick={() => handleEdit(f)} style={fieldStyle} />
                   <Popconfirm title="Delete this facility?" onConfirm={() => handleDelete(f.id)} okText="Yes" cancelText="No">
                     <Button danger icon={<DeleteOutlined />} size="small">Delete</Button>

@@ -9,7 +9,7 @@ export default function LoginPage() {
     const { data, error } = await supabaseClient.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: process.env.NEXT_PUBLIC_DOMAIN + "/admin",
+        redirectTo: window.location.origin + "/admin",
       },
     });
 

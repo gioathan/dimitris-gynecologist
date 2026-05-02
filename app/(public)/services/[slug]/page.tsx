@@ -32,7 +32,7 @@ export default async function ServiceDetailPage({ params }: Props) {
 
   if (!service) notFound();
 
-  const sections: { id: string; title: string; content: string | null; display_order: number }[] =
+  const sections: { id: string; title: string; subtitle: string | null; slug: string | null; content: string | null; display_order: number }[] =
     service.service_sections ?? [];
 
   return (
@@ -66,21 +66,46 @@ export default async function ServiceDetailPage({ params }: Props) {
 
       {/* ── Sections ────────────────────────────────────────── */}
       {sections.length > 0 && (
-        <section className="px-6 pb-10 space-y-5">
-          {sections.map((section) => (
-            <div
-              key={section.id}
-              className="bg-surface-container-lowest rounded-[1.75rem] p-7 editorial-shadow"
-            >
-              <h2 className="text-lg font-bold text-on-surface mb-4 flex items-center gap-3">
-                <span className="w-2 h-2 rounded-full bg-primary inline-block shrink-0" />
-                {section.title}
-              </h2>
-              {section.content && (
-                <p className="text-on-surface-variant text-sm leading-relaxed">{section.content}</p>
-              )}
-            </div>
-          ))}
+        <section className="px-6 pb-10 space-y-4">
+          {sections.map((section) =>
+            section.slug ? (
+              <Link
+                key={section.id}
+                href={`/services/${slug}/${section.slug}`}
+                className="bg-surface-container-lowest rounded-[1.75rem] p-7 editorial-shadow flex items-center justify-between gap-4 group hover:shadow-md active:scale-[0.98] transition-all block"
+              >
+                <div className="min-w-0">
+                  <h2 className="text-lg font-bold text-on-surface leading-snug mb-1 flex items-center gap-3">
+                    <span className="w-2 h-2 rounded-full bg-primary inline-block shrink-0" />
+                    {section.title}
+                  </h2>
+                  {section.subtitle && (
+                    <p className="text-on-surface-variant text-sm leading-relaxed pl-5">
+                      {section.subtitle}
+                    </p>
+                  )}
+                </div>
+                <span className="material-symbols-outlined text-on-surface-variant text-lg shrink-0 group-hover:translate-x-1 transition-transform">
+                  arrow_forward
+                </span>
+              </Link>
+            ) : (
+              <div
+                key={section.id}
+                className="bg-surface-container-lowest rounded-[1.75rem] p-7 editorial-shadow"
+              >
+                <h2 className="text-lg font-bold text-on-surface leading-snug mb-1 flex items-center gap-3">
+                  <span className="w-2 h-2 rounded-full bg-primary inline-block shrink-0" />
+                  {section.title}
+                </h2>
+                {section.subtitle && (
+                  <p className="text-on-surface-variant text-sm leading-relaxed pl-5">
+                    {section.subtitle}
+                  </p>
+                )}
+              </div>
+            )
+          )}
         </section>
       )}
 

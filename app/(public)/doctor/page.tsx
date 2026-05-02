@@ -8,10 +8,10 @@ export const revalidate = 3600;
 export async function generateMetadata(): Promise<Metadata> {
   const doctor = await getDoctorProfile();
   return {
-    title: doctor?.name ? `Δρ. ${doctor.name}` : "Ο Ιατρός",
+    title: doctor?.name ? `${doctor.name}` : "Ο Ιατρός",
     description: doctor?.bio?.slice(0, 160) ?? "Γνωρίστε τον ειδικό γυναικολόγο μαιευτήρα.",
     openGraph: {
-      title: doctor?.name ? `Δρ. ${doctor.name} | ${doctor.title}` : "Ο Ιατρός",
+      title: doctor?.name ? `${doctor.name} | ${doctor.title}` : "Ο Ιατρός",
       description: doctor?.bio?.slice(0, 160) ?? "",
       ...(doctor?.photo_url ? { images: [{ url: doctor.photo_url }] } : {}),
     },
@@ -41,7 +41,7 @@ export default async function DoctorPage() {
   return (
     <>
       {/* ── Hero ────────────────────────────────────────────── */}
-      <section className="px-6 py-14 lg:py-24">
+      <section className="px-6 pt-8 pb-12 lg:pt-10 lg:pb-16">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Text */}
           <div className="order-2 lg:order-1">
@@ -49,7 +49,7 @@ export default async function DoctorPage() {
               Ιδρυτής & Επικεφαλής Ιατρός
             </p>
             <h1 className="text-4xl lg:text-6xl font-extrabold text-on-surface leading-tight tracking-tight mb-3">
-              Δρ. {firstName}
+              {firstName}
               <br />
               <span className="text-primary">{lastName}</span>
             </h1>
@@ -60,13 +60,13 @@ export default async function DoctorPage() {
               </p>
             )}
             <div className="grid grid-cols-2 gap-4 mt-10">
-              <div className="bg-surface-container p-4 rounded-2xl">
-                <span className="material-symbols-outlined text-3xl text-primary block mb-2" style={{ fontVariationSettings: "'FILL' 1" }}>favorite</span>
-                <span className="text-xs font-bold uppercase tracking-wide text-on-surface-variant">Εξατομικευμένη Φροντίδα</span>
+              <div className="bg-surface-container p-4 rounded-2xl flex flex-col gap-2">
+                <span className="material-symbols-outlined text-3xl text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>favorite</span>
+                <span className="text-xs font-bold leading-snug text-on-surface-variant">Εξατομικευμένη Φροντίδα</span>
               </div>
-              <div className="bg-primary-fixed/40 p-4 rounded-2xl">
-                <span className="material-symbols-outlined text-3xl text-secondary block mb-2" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
-                <span className="text-xs font-bold uppercase tracking-wide text-on-surface-variant">Σύγχρονες Μέθοδοι</span>
+              <div className="bg-primary-fixed/40 p-4 rounded-2xl flex flex-col gap-2">
+                <span className="material-symbols-outlined text-3xl text-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
+                <span className="text-xs font-bold leading-snug text-on-surface-variant">Σύγχρονες Μέθοδοι</span>
               </div>
             </div>
           </div>
@@ -110,7 +110,7 @@ export default async function DoctorPage() {
       {credentials.length > 0 && (
         <section className="px-6 py-16 lg:py-20">
           <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="bg-surface-container-low p-8 rounded-[2rem]">
+            <div className="bg-surface-container p-8 rounded-[2rem]">
               <h2 className="text-xl font-bold text-on-surface mb-8 flex items-center gap-3">
                 <span className="material-symbols-outlined">school</span>
                 Σπουδές & Εκπαίδευση
@@ -129,7 +129,7 @@ export default async function DoctorPage() {
               </div>
             </div>
 
-            <div className="bg-surface-container-high p-8 rounded-[2rem]">
+            <div className="bg-surface-container p-8 rounded-[2rem]">
               <h2 className="text-xl font-bold text-on-surface mb-8 flex items-center gap-3">
                 <span className="material-symbols-outlined">stethoscope</span>
                 Εξειδίκευση

@@ -66,6 +66,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { href: "/admin/facilities", label: "Facilities", icon: <BuildOutlined /> },
     { href: "/admin/services", label: "Services", icon: <AppstoreOutlined /> },
     { href: "/admin/articles", label: "Articles", icon: <FileTextOutlined /> },
+    { href: "/admin/article-categories", label: "Article Categories", icon: <AppstoreOutlined /> },
     { href: "/admin/site-settings", label: "Site Settings", icon: <SettingOutlined /> },
   ];
 

@@ -1,18 +1,21 @@
-export default function Logo({ showText = false }: { showText?: boolean }) {
+export default function Logo({ showText = false, textDark = false, circled = false }: { showText?: boolean; textDark?: boolean; circled?: boolean }) {
+  const size = showText ? 44 : 36;
   return (
     <div className="flex items-center gap-2.5">
-      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-sm shadow-primary/30 shrink-0">
-        <span
-          className="material-symbols-outlined text-white"
-          style={{ fontSize: 18, fontVariationSettings: "'FILL' 1" }}
-        >
-          local_florist
-        </span>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <div className={circled ? "rounded-full bg-white shadow-md shadow-black/15 p-1.5 shrink-0" : "shrink-0"}>
+        <img
+          src="/logo.png"
+          alt="Λογότυπο Ιατρείου"
+          width={size}
+          height={size}
+          className="object-contain block"
+        />
       </div>
       {showText && (
         <div className="leading-tight">
-          <p className="text-xs font-bold text-primary uppercase tracking-widest">Ιατρείο</p>
-          <p className="text-sm font-extrabold text-on-surface tracking-tight">Παπαδόπουλος</p>
+          <p className={`text-xs font-bold tracking-widest ${textDark ? "text-on-surface" : "text-white"}`}>Δημήτριος Ελ. Χριστακόπουλος MD,MSc</p>
+          <p className={`text-xs font-extrabold tracking-tight ${textDark ? "text-on-surface-variant" : "text-white"}`}>Μαιευτήρας-Γυναικολόγος Χειρουργός</p>
         </div>
       )}
     </div>

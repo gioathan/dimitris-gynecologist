@@ -1,5 +1,4 @@
-import { getPublishedArticles } from "@/lib/data/public";
-import Image from "next/image";
+import { getArticleCategories } from "@/lib/data/public";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -10,14 +9,20 @@ export const metadata: Metadata = {
   description:
     "Επιστημονικά άρθρα και νέα για τη γυναικεία υγεία: HPV, εμμηνόπαυση, εγκυμοσύνη, προληπτικός έλεγχος και περισσότερα.",
   openGraph: {
-    title: "Άρθρα & Νέα | Δρ. Παπαδόπουλος",
+    title: "Άρθρα & Νέα | Δημήτριος Ελ. Χριστακόπουλος MD, MSc",
     description: "Ενημερωθείτε για θέματα γυναικείας υγείας από εξειδικευμένο ιατρό.",
   },
 };
 
+const CATEGORY_BG: string[] = [
+  "bg-secondary-container text-on-secondary-container",
+  "bg-primary-fixed text-on-primary-fixed",
+  "bg-tertiary-fixed text-on-tertiary-fixed",
+  "bg-secondary-fixed text-on-secondary-fixed",
+];
+
 export default async function ArticlesPage() {
-  const articles = await getPublishedArticles();
-  const [featured, ...rest] = articles;
+  const categories = await getArticleCategories();
 
   return (
     <>
@@ -37,72 +42,37 @@ export default async function ArticlesPage() {
         </div>
       </section>
 
-      {/* ── Articles ─────────────────────────────────────────── */}
+      {/* ── Categories ───────────────────────────────────────── */}
       <section className="px-6 py-12 pb-16">
         <div className="max-w-7xl mx-auto">
-          {articles.length === 0 ? (
+          {categories.length === 0 ? (
             <p className="text-center text-on-surface-variant py-16">
-              Δεν υπάρχουν δημοσιευμένα άρθρα αυτή τη στιγμή.
+              Δεν υπάρχουν διαθέσιμες κατηγορίες αυτή τη στιγμή.
             </p>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Featured — full width on mobile, spans 2 cols on desktop */}
-              {featured && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+              {categories.map((category, i) => (
                 <Link
-                  href={`/articles/${featured.slug}`}
-                  className="relative rounded-[2rem] overflow-hidden aspect-[4/3] lg:col-span-2 lg:row-span-2 block group"
+                  key={category.id}
+                  href={`/articles/${category.slug}`}
+                  className="bg-surface-container-lowest rounded-[1.75rem] p-7 editorial-shadow flex items-center justify-between gap-5 group hover:shadow-md active:scale-[0.98] transition-all"
                 >
-                  {featured.image_url ? (
-                    <Image
-                      src={featured.image_url}
-                      alt={featured.title}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      sizes="(max-width: 1024px) 100vw, 66vw"
-                      priority
-                    />
-                  ) : (
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary-fixed to-secondary-container" />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-on-surface/80 via-on-surface/20 to-transparent" />
-                  <div className="absolute bottom-0 left-0 p-8">
-                    <span className="bg-secondary text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-3 inline-block">
-                      {featured.published_at
-                        ? new Date(featured.published_at).toLocaleDateString("el-GR", { day: "numeric", month: "long", year: "numeric" })
-                        : "Άρθρο"}
-                    </span>
-                    <h2 className="text-2xl lg:text-3xl font-bold text-white leading-tight">{featured.title}</h2>
-                    {featured.excerpt && (
-                      <p className="text-white/80 text-sm mt-2 line-clamp-2">{featured.excerpt}</p>
+                  <div className="min-w-0 flex-1">
+                    <div className={`inline-flex items-center justify-center w-12 h-12 rounded-2xl mb-4 ${CATEGORY_BG[i % 4]}`}>
+                      <span className="material-symbols-outlined text-xl">{(category as any).icon ?? "folder"}</span>
+                    </div>
+                    <h2 className="text-xl font-bold text-on-surface leading-snug mb-2">
+                      {category.title}
+                    </h2>
+                    {category.subtitle && (
+                      <p className="text-on-surface-variant text-sm leading-relaxed line-clamp-2">
+                        {category.subtitle}
+                      </p>
                     )}
                   </div>
-                </Link>
-              )}
-
-              {/* Rest — stacked on right column on desktop */}
-              {rest.map((article) => (
-                <Link
-                  key={article.id}
-                  href={`/articles/${article.slug}`}
-                  className="bg-surface-container-highest rounded-[2rem] p-5 flex items-center gap-5 group hover:bg-surface-container-high transition-colors"
-                >
-                  <div className="w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0 bg-surface-container">
-                    {article.image_url ? (
-                      <Image src={article.image_url} alt={article.title} width={80} height={80} className="w-full h-full object-cover" />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <span className="material-symbols-outlined text-primary">article</span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="font-bold text-on-surface text-base leading-snug mb-1 line-clamp-2">{article.title}</h3>
-                    <span className="text-primary text-xs font-bold uppercase">
-                      {article.published_at
-                        ? new Date(article.published_at).toLocaleDateString("el-GR", { day: "numeric", month: "long", year: "numeric" })
-                        : "Άρθρο"}
-                    </span>
-                  </div>
+                  <span className="material-symbols-outlined text-on-surface-variant text-xl shrink-0 group-hover:translate-x-1 transition-transform">
+                    arrow_forward
+                  </span>
                 </Link>
               ))}
             </div>

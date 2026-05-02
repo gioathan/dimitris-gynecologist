@@ -1,11 +1,9 @@
 "use client";
 
-import { Form, Input, InputNumber, Switch, Button, Space, Upload, message } from "antd";
+import { Form, Input, InputNumber, Switch, Button, Space } from "antd";
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { uploadImage, deleteImage } from "@/lib/uploadImage";
-import Image from "next/image";
 
 interface ServiceFormProps {
   initialValues?: any;
@@ -21,7 +19,6 @@ export default function ServiceForm({ initialValues, onSubmit, isEdit = false }:
   const [form] = Form.useForm();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [uploading, setUploading] = useState(false);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!isEdit) form.setFieldValue("slug", slugify(e.target.value));
@@ -79,15 +76,21 @@ export default function ServiceForm({ initialValues, onSubmit, isEdit = false }:
       <div style={{ marginBottom: 16 }}>
         <h3 style={{ color: "#ededed", marginBottom: 12 }}>Service Sections</h3>
         <Form.List name="sections">
-          {(fields, { add, remove }) => (
+          {(fields, { add: addSection, remove: removeSection }) => (
             <>
               {fields.map(({ key, name, ...restField }) => (
                 <div key={key} style={{ background: "#0a0a0a", border: "1px solid #3a3a3a", borderRadius: 8, padding: 16, marginBottom: 12 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
                     <span style={{ color: "#888", fontSize: 12 }}>Section {name + 1}</span>
-                    <Button danger icon={<DeleteOutlined />} size="small" onClick={() => remove(name)}>Remove</Button>
+                    <Button danger icon={<DeleteOutlined />} size="small" onClick={() => removeSection(name)}>Remove</Button>
                   </div>
-                  <Form.Item {...restField} name={[name, "title"]} label="Section Title" rules={[{ required: true, message: "Title required" }]}>
+                  <Form.Item {...restField} name={[name, "title"]} label="Title" rules={[{ required: true, message: "Title required" }]}>
+                    <Input style={inputStyle} />
+                  </Form.Item>
+                  <Form.Item {...restField} name={[name, "slug"]} label="Slug" rules={[{ required: true, message: "Slug required" }]} extra="URL segment for the section page">
+                    <Input style={inputStyle} />
+                  </Form.Item>
+                  <Form.Item {...restField} name={[name, "subtitle"]} label="Subtitle">
                     <Input style={inputStyle} />
                   </Form.Item>
                   <Form.Item {...restField} name={[name, "content"]} label="Content">
@@ -98,7 +101,7 @@ export default function ServiceForm({ initialValues, onSubmit, isEdit = false }:
                   </Form.Item>
                 </div>
               ))}
-              <Button onClick={() => add()} icon={<PlusOutlined />} style={{ background: "#2a2a2a", borderColor: "#3a3a3a", color: "#ededed" }}>
+              <Button onClick={() => addSection()} icon={<PlusOutlined />} style={{ background: "#2a2a2a", borderColor: "#3a3a3a", color: "#ededed" }}>
                 Add Section
               </Button>
             </>

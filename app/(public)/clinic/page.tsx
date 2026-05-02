@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description:
     "Επισκεφθείτε το σύγχρονο ιατρείο μας στην Καλαμάτα. Ωράριο λειτουργίας, τοποθεσία και φωτογραφίες των χώρων.",
   openGraph: {
-    title: "Το Ιατρείο | Δρ. Παπαδόπουλος",
+    title: "Το Ιατρείο | Δημήτριος Ελ. Χριστακόπουλος MD, MSc",
     description: "Σύγχρονοι χώροι, άνεση και επαγγελματική φροντίδα στο ιατρείο μας στην Καλαμάτα.",
   },
 };
@@ -30,8 +30,7 @@ export default async function ClinicPage() {
   ]);
 
   const hoursItems = [
-    { label: "Δευτέρα – Τρίτη", value: settings.hours_mon_tue },
-    { label: "Τετ – Πεμ – Παρ", value: settings.hours_wed_thu_fri },
+    { label: "Δευτέρα – Παρασκευή", value: settings.hours_mon_fri },
     { label: "Σάββατο – Κυριακή", value: settings.hours_sat_sun },
   ].filter((h) => h.value);
 

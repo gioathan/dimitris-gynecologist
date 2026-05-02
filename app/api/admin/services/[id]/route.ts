@@ -26,11 +26,14 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
 
   await db.from("service_sections").delete().eq("service_id", id);
+
   if (body.sections?.length) {
     await db.from("service_sections").insert(
       body.sections.map((s: any, i: number) => ({
         service_id: id,
         title: s.title,
+        slug: s.slug ?? null,
+        subtitle: s.subtitle ?? null,
         content: s.content ?? null,
         display_order: s.display_order ?? i,
       }))

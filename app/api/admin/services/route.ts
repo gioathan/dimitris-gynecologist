@@ -32,6 +32,8 @@ export async function POST(request: Request) {
       body.sections.map((s: any, i: number) => ({
         service_id: service.id,
         title: s.title,
+        slug: s.slug ?? null,
+        subtitle: s.subtitle ?? null,
         content: s.content ?? null,
         display_order: s.display_order ?? i,
       }))

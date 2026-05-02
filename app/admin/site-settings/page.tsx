@@ -8,9 +8,10 @@ import { adminFetch } from "@/lib/adminFetch";
 const SETTING_LABELS: Record<string, string> = {
   address: "Address",
   phone: "Phone",
+  phone_mobile: "Mobile Phone",
   email: "Email",
-  hours_mon_tue: "Hours (Mon–Tue)",
-  hours_wed_thu_fri: "Hours (Wed–Fri)",
+  instagram: "Instagram (username or full URL)",
+  hours_mon_fri: "Hours (Mon–Fri)",
   hours_sat_sun: "Hours (Sat–Sun)",
   google_maps_embed: "Google Maps Embed URL",
 };

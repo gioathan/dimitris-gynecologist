@@ -11,8 +11,8 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_DOMAIN || "http://localhost:3001"),
   title: {
-    default: "Δρ. Παπαδόπουλος | Μαιευτήρας - Γυναικολόγος",
-    template: "%s | Δρ. Παπαδόπουλος",
+    default: "Δημήτριος Ελ. Χριστακόπουλος MD, MSc | Μαιευτήρας - Γυναικολόγος",
+    template: "%s | Δημήτριος Ελ. Χριστακόπουλος MD, MSc",
   },
   description: "Εξειδικευμένος Μαιευτήρας - Γυναικολόγος στην Καλαμάτα. Προγεννητικός έλεγχος, γυναικολογική εξέταση, υπερηχογράφημα, κολποσκόπηση.",
   robots: { index: true, follow: true },

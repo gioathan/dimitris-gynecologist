@@ -1,10 +1,11 @@
 "use client";
 
-import { Form, Input, Switch, Button, Space, Upload, message } from "antd";
+import { Form, Input, Switch, Button, Space, Upload, Select, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { uploadImage, deleteImage } from "@/lib/uploadImage";
+import { adminFetch } from "@/lib/adminFetch";
 import Image from "next/image";
 
 interface ArticleFormProps {
@@ -23,6 +24,13 @@ export default function ArticleForm({ initialValues, onSubmit, isEdit = false }:
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(initialValues?.image_url ?? null);
   const [uploading, setUploading] = useState(false);
+  const [categories, setCategories] = useState<{ id: string; title: string }[]>([]);
+
+  useEffect(() => {
+    adminFetch("/api/admin/article-categories").then((res) => res.json()).then((data) => {
+      setCategories(Array.isArray(data) ? data : []);
+    });
+  }, []);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!isEdit) form.setFieldValue("slug", slugify(e.target.value));
@@ -60,6 +68,15 @@ export default function ArticleForm({ initialValues, onSubmit, isEdit = false }:
 
       <Form.Item label="Slug" name="slug" rules={[{ required: true }]} extra="URL identifier, auto-generated from title">
         <Input style={inputStyle} />
+      </Form.Item>
+
+      <Form.Item label="Category" name="category_id" rules={[{ required: true, message: "Category required" }]}>
+        <Select
+          allowClear
+          placeholder="Select a category"
+          options={categories.map((c) => ({ value: c.id, label: c.title }))}
+          style={{ background: "#1a1a1a" }}
+        />
       </Form.Item>
 
       <Form.Item label="Cover Image">

@@ -1,5 +1,6 @@
 import { unstable_cache } from "next/cache";
 import { createPublicClient } from "@/lib/supabase/public";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 const TTL = 3600;
 
@@ -62,11 +63,80 @@ export const getServiceBySlug = unstable_cache(
   { revalidate: TTL, tags: ["services"] }
 );
 
+export const getServiceSectionBySlug = unstable_cache(
+  async (serviceSlug: string, sectionSlug: string) => {
+    const { data: service } = await createPublicClient()
+      .from("services")
+      .select("id, title, slug")
+      .eq("slug", serviceSlug)
+      .eq("is_published", true)
+      .single();
+    if (!service) return null;
+
+    const { data: section } = await createAdminClient()
+      .from("service_sections")
+      .select("*")
+      .eq("service_id", service.id)
+      .eq("slug", sectionSlug)
+      .single();
+
+    return section ? { ...section, service } : null;
+  },
+  ["service-section-by-slug"],
+  { revalidate: TTL, tags: ["services"] }
+);
+
+export const getArticleCategories = unstable_cache(
+  async () => {
+    const { data } = await createAdminClient()
+      .from("article_categories")
+      .select("*")
+      .order("title");
+    return data ?? [];
+  },
+  ["article-categories"],
+  { revalidate: TTL, tags: ["articles"] }
+);
+
+export const getArticleCategoryBySlug = unstable_cache(
+  async (slug: string) => {
+    const { data } = await createAdminClient()
+      .from("article_categories")
+      .select("*")
+      .eq("slug", slug)
+      .single();
+    return data;
+  },
+  ["article-category-by-slug"],
+  { revalidate: TTL, tags: ["articles"] }
+);
+
+export const getArticlesByCategory = unstable_cache(
+  async (categorySlug: string) => {
+    const { data: category } = await createAdminClient()
+      .from("article_categories")
+      .select("id")
+      .eq("slug", categorySlug)
+      .single();
+    if (!category) return [];
+
+    const { data } = await createPublicClient()
+      .from("articles")
+      .select("id, title, slug, excerpt, image_url, published_at, article_categories(id, title, slug)")
+      .eq("is_published", true)
+      .eq("category_id", category.id)
+      .order("published_at", { ascending: false });
+    return data ?? [];
+  },
+  ["articles-by-category"],
+  { revalidate: TTL, tags: ["articles"] }
+);
+
 export const getPublishedArticles = unstable_cache(
   async () => {
     const { data } = await createPublicClient()
       .from("articles")
-      .select("id, title, slug, excerpt, image_url, published_at")
+      .select("id, title, slug, excerpt, image_url, published_at, article_categories(id, title, slug)")
       .eq("is_published", true)
       .order("published_at", { ascending: false });
     return data ?? [];
@@ -79,7 +149,7 @@ export const getLatestArticles = unstable_cache(
   async () => {
     const { data } = await createPublicClient()
       .from("articles")
-      .select("id, title, slug, excerpt, image_url, published_at")
+      .select("id, title, slug, excerpt, image_url, published_at, article_categories(id, title, slug)")
       .eq("is_published", true)
       .order("published_at", { ascending: false })
       .limit(4);
@@ -93,7 +163,7 @@ export const getArticleBySlug = unstable_cache(
   async (slug: string) => {
     const { data } = await createPublicClient()
       .from("articles")
-      .select("*")
+      .select("*, article_categories(id, title, slug)")
       .eq("slug", slug)
       .eq("is_published", true)
       .single();

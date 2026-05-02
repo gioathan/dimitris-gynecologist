@@ -144,7 +144,7 @@ export default function Header({ navItems, instagram }: HeaderProps) {
           />
           <div className="relative w-72 max-w-[85vw] bg-surface h-full shadow-2xl flex flex-col">
             <div className="flex justify-between items-center px-6 py-5 border-b border-outline-variant/20">
-              <Logo showText />
+              <Logo showText textDark />
               <button
                 onClick={() => setDrawerOpen(false)}
                 className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-surface-container transition-colors"

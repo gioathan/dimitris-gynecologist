@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "./Logo";
 
 type NavChild = { href: string; label: string };
@@ -18,6 +18,14 @@ export default function Header({ navItems, instagram }: HeaderProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [expandedMobile, setExpandedMobile] = useState<string | null>(null);
 
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape" && drawerOpen) setDrawerOpen(false);
+    }
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [drawerOpen]);
+
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
@@ -32,7 +40,7 @@ export default function Header({ navItems, instagram }: HeaderProps) {
             onClick={() => setDrawerOpen(true)}
             aria-label="Μενού"
           >
-            <span className="material-symbols-outlined text-on-surface">menu</span>
+            <span className="material-symbols-outlined text-on-surface" aria-hidden="true">menu</span>
           </button>
 
           {/* ── Desktop left: logo + text ── */}
@@ -43,9 +51,17 @@ export default function Header({ navItems, instagram }: HeaderProps) {
           {/* ── Mobile center: site name ── */}
           <Link
             href="/"
-            className="lg:hidden min-w-0 flex-1 text-xs font-bold tracking-wide uppercase text-white truncate text-center px-2"
+            className="lg:hidden min-w-0 flex-1 text-center px-2 leading-tight"
           >
-            Δημήτριος Ελ. Χριστακόπουλος
+            <span className="block text-[11px] font-bold tracking-wide uppercase text-white">
+              Δημήτριος Χριστακόπουλος
+            </span>
+            <span className="block text-[9px] font-semibold tracking-wider text-white/65 whitespace-nowrap">
+              Μαιευτήρας-Γυναικολόγος
+            </span>
+            <span className="block text-[9px] font-semibold tracking-wider text-white/65">
+              Χειρουργός
+            </span>
           </Link>
 
           {/* ── Desktop nav ── */}
@@ -137,19 +153,21 @@ export default function Header({ navItems, instagram }: HeaderProps) {
 
       {/* ── Mobile drawer ── */}
       {drawerOpen && (
-        <div className="fixed inset-0 z-[60] flex lg:hidden">
+        <div className="fixed inset-0 z-[60] flex lg:hidden" role="dialog" aria-modal="true" aria-label="Μενού πλοήγησης">
           <div
             className="absolute inset-0 bg-on-surface/30 backdrop-blur-sm"
             onClick={() => setDrawerOpen(false)}
+            aria-hidden="true"
           />
           <div className="relative w-72 max-w-[85vw] bg-surface h-full shadow-2xl flex flex-col">
             <div className="flex justify-between items-center px-6 py-5 border-b border-outline-variant/20">
               <Logo showText textDark />
               <button
                 onClick={() => setDrawerOpen(false)}
+                aria-label="Κλείσιμο μενού"
                 className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-surface-container transition-colors"
               >
-                <span className="material-symbols-outlined text-on-surface-variant">close</span>
+                <span className="material-symbols-outlined text-on-surface-variant" aria-hidden="true">close</span>
               </button>
             </div>
             <nav className="flex flex-col gap-1 p-4 flex-1 overflow-y-auto">
@@ -170,9 +188,11 @@ export default function Header({ navItems, instagram }: HeaderProps) {
                     {children?.length ? (
                       <button
                         onClick={() => setExpandedMobile(expandedMobile === href ? null : href)}
+                        aria-expanded={expandedMobile === href}
+                        aria-label={`${expandedMobile === href ? "Σύμπτυξη" : "Ανάπτυξη"} υπομενού`}
                         className="w-10 h-10 flex items-center justify-center rounded-2xl hover:bg-surface-container transition-colors shrink-0"
                       >
-                        <span className={`material-symbols-outlined text-on-surface-variant transition-transform duration-200 ${expandedMobile === href ? "rotate-180" : ""}`}>
+                        <span className={`material-symbols-outlined text-on-surface-variant transition-transform duration-200 ${expandedMobile === href ? "rotate-180" : ""}`} aria-hidden="true">
                           expand_more
                         </span>
                       </button>

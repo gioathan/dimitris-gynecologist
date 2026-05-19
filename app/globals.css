@@ -84,6 +84,23 @@ body {
   .glass-panel { backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
 }
 
+/* Keyboard focus indicators — only shown when navigating with keyboard, invisible to mouse users */
+:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Admin panel dark theme - scoped to /admin routes */
 [data-admin="true"] {
   background: #0a0a0a !important;

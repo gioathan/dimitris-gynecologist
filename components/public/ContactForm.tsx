@@ -17,32 +17,51 @@ function ReasonSelect({ value, onChange }: { value: string; onChange: (v: string
     function handleClick(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     }
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
     document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   return (
     <div ref={ref} className="relative">
       <button
         type="button"
+        id="reason-select"
         onClick={() => setOpen((o) => !o)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-controls="reason-listbox"
         className="w-full bg-surface-container-highest rounded-xl p-4 text-sm text-left flex items-center justify-between gap-2 focus:outline-none focus:ring-2 focus:ring-secondary transition-all"
       >
         <span className={value ? "text-on-surface" : "text-on-surface-variant/50"}>{value || "Επιλέξτε λόγο επικοινωνίας"}</span>
         <span
           className="material-symbols-outlined text-on-surface-variant text-[20px] transition-transform duration-200 shrink-0"
           style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
+          aria-hidden="true"
         >
           expand_more
         </span>
       </button>
 
       {open && (
-        <ul className="absolute z-50 mt-1.5 w-full bg-surface-container-highest rounded-xl shadow-lg shadow-black/10 overflow-hidden border border-outline-variant/20">
+        <ul
+          id="reason-listbox"
+          role="listbox"
+          aria-label="Λόγος επικοινωνίας"
+          className="absolute z-50 mt-1.5 w-full bg-surface-container-highest rounded-xl shadow-lg shadow-black/10 overflow-hidden border border-outline-variant/20"
+        >
           {reasons.map((r) => (
-            <li key={r}>
+            <li key={r} role="presentation">
               <button
                 type="button"
+                role="option"
+                aria-selected={value === r}
                 onClick={() => { onChange(r); setOpen(false); }}
                 className={`w-full text-left px-4 py-3.5 text-sm transition-colors ${
                   value === r
@@ -117,21 +136,22 @@ export default function ContactForm() {
     <form onSubmit={handleSubmit} className="space-y-5">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div className="space-y-2">
-          <label className="text-xs font-bold text-on-surface-variant ml-1">Ονοματεπώνυμο</label>
-          <input name="name" required placeholder="Μαρία Παπαδοπούλου" className={inputClass} />
+          <label htmlFor="contact-name" className="text-xs font-bold text-on-surface-variant ml-1">Ονοματεπώνυμο</label>
+          <input id="contact-name" name="name" required placeholder="Μαρία Παπαδοπούλου" className={inputClass} />
         </div>
         <div className="space-y-2">
-          <label className="text-xs font-bold text-on-surface-variant ml-1">Email</label>
-          <input name="email" type="email" required placeholder="maria@example.com" className={inputClass} />
+          <label htmlFor="contact-email" className="text-xs font-bold text-on-surface-variant ml-1">Email</label>
+          <input id="contact-email" name="email" type="email" required placeholder="maria@example.com" className={inputClass} />
         </div>
       </div>
       <div className="space-y-2">
-        <label className="text-xs font-bold text-on-surface-variant ml-1">Λόγος Επικοινωνίας</label>
+        <label htmlFor="reason-select" className="text-xs font-bold text-on-surface-variant ml-1">Λόγος Επικοινωνίας</label>
         <ReasonSelect value={reason} onChange={setReason} />
       </div>
       <div className="space-y-2">
-        <label className="text-xs font-bold text-on-surface-variant ml-1">Μήνυμα</label>
+        <label htmlFor="contact-message" className="text-xs font-bold text-on-surface-variant ml-1">Μήνυμα</label>
         <textarea
+          id="contact-message"
           name="message"
           required
           rows={4}

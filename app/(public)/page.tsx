@@ -170,12 +170,22 @@ export default async function HomePage() {
               </Link>
             </div>
             <div className="flex flex-col gap-4">
+              {hoursItems.length > 0 && (
+                <p className="text-white/60 font-bold tracking-widest uppercase text-xs">
+                  Ωράριο Γραμματείας
+                </p>
+              )}
               {hoursItems.map((h) => (
                 <div key={h.label} className="bg-white/10 rounded-2xl px-6 py-4 flex justify-between items-center">
                   <span className="text-white/70 text-sm font-medium">{h.label}</span>
                   <span className="text-white font-bold text-sm">{h.value}</span>
                 </div>
               ))}
+              {hoursItems.length > 0 && (
+                <p className="text-white/60 text-xs italic border-l-2 border-white/20 pl-3">
+                  Ο ιατρός δέχεται αποκλειστικά κατόπιν ραντεβού.
+                </p>
+              )}
               {settings.address && (
                 <div className="bg-white/10 rounded-2xl px-6 py-4 flex items-center gap-3">
                   <span className="material-symbols-outlined text-white/70 text-[18px] shrink-0">location_on</span>

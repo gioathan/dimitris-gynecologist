@@ -124,7 +124,7 @@ export default async function ClinicPage() {
         {/* Hours */}
         {hoursItems.length > 0 && (
           <div className="bg-primary text-on-primary rounded-[2rem] p-8 flex flex-col gap-6">
-            <h2 className="text-2xl font-bold">Ωράριο Λειτουργίας</h2>
+            <h2 className="text-2xl font-bold">Ωράριο Γραμματείας</h2>
             <ul className="space-y-5">
               {hoursItems.map((h) => (
                 <li
@@ -144,6 +144,9 @@ export default async function ClinicPage() {
                 </li>
               ))}
             </ul>
+            <p className="text-sm text-on-primary/80 italic border-l-2 border-white/30 pl-3">
+              Ο ιατρός δέχεται αποκλειστικά κατόπιν ραντεβού.
+            </p>
             {settings.phone && (
               <a
                 href={`tel:${settings.phone.replace(/\s/g, "")}`}
@@ -170,6 +173,7 @@ export default async function ClinicPage() {
             <div className="w-full h-72 rounded-[2rem] overflow-hidden relative">
               <iframe
                 src={settings.google_maps_embed}
+                title="Χάρτης τοποθεσίας ιατρείου"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

@@ -80,7 +80,7 @@ export default async function HomePage() {
               </Link>
               <Link
                 href="/clinic"
-                className="inline-flex items-center gap-2 bg-surface-container-lowest text-secondary border border-outline-variant/30 py-4 px-8 rounded-full font-bold editorial-shadow active:scale-95 transition-transform"
+                className="inline-flex items-center gap-2 bg-surface-container-lowest text-on-secondary-container border border-outline-variant/30 py-4 px-8 rounded-full font-bold editorial-shadow active:scale-95 transition-transform"
               >
                 <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>
                   call
@@ -118,7 +118,7 @@ export default async function HomePage() {
               <h2 className="text-3xl lg:text-4xl font-extrabold text-on-surface leading-tight tracking-tight mb-2">
                 {doctor.name}
               </h2>
-              <p className="text-secondary font-semibold mb-5">{doctor.title}</p>
+              <p className="text-on-secondary-container font-semibold mb-5">{doctor.title}</p>
               {doctor.bio && (
                 <p className="text-on-surface-variant leading-relaxed text-base max-w-xl mb-7 line-clamp-4">
                   {doctor.bio}
@@ -163,10 +163,10 @@ export default async function HomePage() {
               <div className="w-12 h-1 bg-white/40 rounded-full mb-7" />
               <Link
                 href="/clinic"
-                className="inline-flex items-center gap-2 text-white font-bold text-sm uppercase tracking-wider hover:gap-3 transition-all"
+                className="inline-flex items-center gap-2 text-white font-bold text-[19px] uppercase tracking-wider hover:gap-3 transition-all"
               >
                 Επισκεφθείτε το Ιατρείο
-                <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+                <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
               </Link>
             </div>
             <div className="flex flex-col gap-4">

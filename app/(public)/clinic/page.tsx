@@ -135,7 +135,7 @@ export default async function ClinicPage() {
                   <span
                     className={`font-bold text-sm ${
                       h.value?.toLowerCase().includes("κλειστ")
-                        ? "text-primary-container"
+                        ? "text-on-primary italic"
                         : ""
                     }`}
                   >
@@ -202,9 +202,9 @@ export default async function ClinicPage() {
             </div>
           ) : settings.address ? (
             <div className="bg-surface-container-low rounded-[2rem] p-6 flex items-start gap-4">
-              <span className="material-symbols-outlined text-secondary mt-1">location_on</span>
+              <span className="material-symbols-outlined text-on-secondary-container mt-1" aria-hidden="true">location_on</span>
               <div>
-                <p className="font-bold text-on-surface text-sm uppercase tracking-wider text-secondary mb-1">
+                <p className="font-bold text-sm uppercase tracking-wider text-on-secondary-container mb-1">
                   Διεύθυνση
                 </p>
                 <p className="text-on-surface font-semibold">{settings.address}</p>

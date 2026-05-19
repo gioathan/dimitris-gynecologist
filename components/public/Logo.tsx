@@ -1,10 +1,11 @@
+import Image from "next/image";
+
 export default function Logo({ showText = false, textDark = false, circled = false }: { showText?: boolean; textDark?: boolean; circled?: boolean }) {
   const size = showText ? 44 : 36;
   return (
     <div className="flex items-center gap-2.5">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <div className={circled ? "rounded-full bg-white shadow-md shadow-black/15 p-1.5 shrink-0" : "shrink-0"}>
-        <img
+        <Image
           src="/logo.png"
           alt="Λογότυπο Ιατρείου"
           width={size}

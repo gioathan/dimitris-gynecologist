@@ -14,14 +14,6 @@ export const metadata: Metadata = {
   },
 };
 
-const SERVICE_ICONS: Record<string, string> = {
-  baby: "child_care",
-  stethoscope: "stethoscope",
-  monitor: "monitor_heart",
-  search: "search",
-  shield: "shield",
-  heart: "favorite",
-};
 
 const ICON_BG: string[] = [
   "bg-secondary-container text-on-secondary-container",
@@ -69,7 +61,7 @@ export default async function ServicesPage() {
                 >
                   <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ${ICON_BG[i % 4]}`}>
                     <span className="material-symbols-outlined text-2xl">
-                      {SERVICE_ICONS[service.icon ?? ""] ?? "medical_services"}
+                      {service.icon || "medical_services"}
                     </span>
                   </div>
                   <div className="min-w-0 flex-1">

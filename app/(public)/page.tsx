@@ -17,14 +17,6 @@ export const metadata: Metadata = {
     "Εξειδικευμένος Μαιευτήρας - Γυναικολόγος στην Καλαμάτα. Προγεννητικός έλεγχος, υπερηχογράφημα, κολποσκόπηση και πλήρης γυναικολογική φροντίδα.",
 };
 
-const SERVICE_ICONS: Record<string, string> = {
-  baby: "child_care",
-  stethoscope: "stethoscope",
-  monitor: "monitor_heart",
-  search: "search",
-  shield: "shield",
-  heart: "favorite",
-};
 
 const CATEGORY_BG: string[] = [
   "bg-secondary-container text-on-secondary-container",
@@ -290,7 +282,7 @@ function ServiceCard({ service }: { service: { id: string; slug: string; icon: s
     >
       <div className="w-12 h-12 bg-secondary-container text-on-secondary-container rounded-2xl flex items-center justify-center mb-5">
         <span className="material-symbols-outlined text-2xl">
-          {SERVICE_ICONS[service.icon ?? ""] ?? "medical_services"}
+          {service.icon || "medical_services"}
         </span>
       </div>
       <h3 className="text-lg font-bold text-on-surface mb-2 leading-snug">{service.title}</h3>

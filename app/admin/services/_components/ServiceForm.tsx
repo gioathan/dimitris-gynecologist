@@ -53,7 +53,7 @@ export default function ServiceForm({ initialValues, onSubmit, isEdit = false }:
         <Input.TextArea rows={5} style={inputStyle} />
       </Form.Item>
 
-      <Form.Item label="Icon" name="icon" extra="Lucide icon name, e.g. 'Heart', 'Baby', 'Microscope'">
+      <Form.Item label="Icon" name="icon" extra="Any Material Symbols icon name, e.g. 'stethoscope', 'child_care', 'favorite', 'monitor_heart'">
         <Input style={inputStyle} />
       </Form.Item>
 

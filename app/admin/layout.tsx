@@ -24,9 +24,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const allowedEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS ?? "").split(",").map(e => e.trim());
+
     supabaseClient.auth.getSession().then(({ data: { session } }) => {
       if (!session) {
         router.push("/login");
+      } else if (!allowedEmails.includes(session.user.email ?? "")) {
+        supabaseClient.auth.signOut().then(() => router.push("/login"));
       } else {
         setUser(session.user);
       }
@@ -35,8 +39,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     const { data: { subscription } } = supabaseClient.auth.onAuthStateChange(
       (_event, session) => {
-        if (!session) router.push("/login");
-        else setUser(session.user);
+        if (!session) {
+          router.push("/login");
+        } else if (!allowedEmails.includes(session.user.email ?? "")) {
+          supabaseClient.auth.signOut().then(() => router.push("/login"));
+        } else {
+          setUser(session.user);
+        }
       }
     );
 

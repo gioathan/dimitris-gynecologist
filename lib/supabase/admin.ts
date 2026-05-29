@@ -13,5 +13,7 @@ export async function verifyAuth(request: Request) {
   if (!authHeader?.startsWith("Bearer ")) return null;
   const token = authHeader.slice(7);
   const { data: { user } } = await createAdminClient().auth.getUser(token);
+  const allowedEmails = (process.env.ADMIN_EMAILS ?? "").split(",").map(e => e.trim());
+  if (!user || !allowedEmails.includes(user.email ?? "")) return null;
   return user;
 }

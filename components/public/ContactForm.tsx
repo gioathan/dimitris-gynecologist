@@ -1,6 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Script from "next/script";
+
+declare global {
+  interface Window {
+    grecaptcha: {
+      ready: (cb: () => void) => void;
+      execute: (siteKey: string, options: { action: string }) => Promise<string>;
+    };
+  }
+}
 
 const reasons = [
   "Γενική Ερώτηση",
@@ -79,6 +89,8 @@ function ReasonSelect({ value, onChange }: { value: string; onChange: (v: string
   );
 }
 
+const SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? "";
+
 export default function ContactForm() {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
@@ -90,11 +102,26 @@ export default function ContactForm() {
     setLoading(true);
     setError(null);
     const form = e.currentTarget;
+
+    let recaptchaToken = "";
+    try {
+      recaptchaToken = await new Promise<string>((resolve, reject) => {
+        window.grecaptcha.ready(() => {
+          window.grecaptcha.execute(SITE_KEY, { action: "contact" }).then(resolve).catch(reject);
+        });
+      });
+    } catch {
+      setError("Αποτυχία επαλήθευσης reCAPTCHA. Δοκιμάστε ξανά.");
+      setLoading(false);
+      return;
+    }
+
     const data = {
       name: (form.elements.namedItem("name") as HTMLInputElement).value,
       email: (form.elements.namedItem("email") as HTMLInputElement).value,
       reason,
       message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+      recaptchaToken,
     };
     try {
       const res = await fetch("/api/contact", {
@@ -133,6 +160,11 @@ export default function ContactForm() {
   }
 
   return (
+    <>
+    <Script
+      src={`https://www.google.com/recaptcha/api.js?render=${SITE_KEY}`}
+      strategy="lazyOnload"
+    />
     <form onSubmit={handleSubmit} className="space-y-5">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div className="space-y-2">
@@ -168,5 +200,6 @@ export default function ContactForm() {
         {loading ? "Αποστολή…" : "Αποστολή Μηνύματος"}
       </button>
     </form>
+    </>
   );
 }

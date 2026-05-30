@@ -9,6 +9,7 @@ const schema = z.object({
   email: z.string().email(),
   reason: z.string().optional(),
   message: z.string().min(10),
+  recaptchaToken: z.string().min(1),
 });
 
 export async function POST(request: Request) {
@@ -18,7 +19,20 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Μη έγκυρα δεδομένα φόρμας." }, { status: 400 });
   }
 
-  const { name, email, reason, message } = parsed.data;
+  const { name, email, reason, message, recaptchaToken } = parsed.data;
+
+  const captchaRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      secret: process.env.RECAPTCHA_SECRET_KEY ?? "",
+      response: recaptchaToken,
+    }),
+  });
+  const captchaJson = await captchaRes.json() as { success: boolean; score: number };
+  if (!captchaJson.success || captchaJson.score < 0.5) {
+    return NextResponse.json({ error: "Αποτυχία επαλήθευσης reCAPTCHA." }, { status: 400 });
+  }
   const to = process.env.CONTACT_EMAIL_TO ?? "";
 
   try {

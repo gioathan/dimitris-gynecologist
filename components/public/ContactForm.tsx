@@ -186,10 +186,12 @@ export default function ContactForm() {
           id="contact-message"
           name="message"
           required
+          minLength={10}
           rows={4}
-          placeholder="Πώς μπορούμε να σας βοηθήσουμε;"
+          placeholder="Πώς μπορούμε να σας βοηθήσουμε; (τουλάχιστον 10 χαρακτήρες)"
           className={inputClass}
         />
+        <p className="text-xs text-on-surface-variant/70 ml-1">Τουλάχιστον 10 χαρακτήρες.</p>
       </div>
       {error && <p className="text-error text-sm font-medium">{error}</p>}
       <button

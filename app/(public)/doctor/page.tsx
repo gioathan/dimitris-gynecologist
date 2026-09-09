@@ -8,8 +8,10 @@ export const revalidate = 3600;
 export async function generateMetadata(): Promise<Metadata> {
   const doctor = await getDoctorProfile();
   return {
-    title: doctor?.name ? `${doctor.name}` : "Ο Ιατρός",
-    description: doctor?.bio?.slice(0, 160) ?? "Γνωρίστε τον ειδικό γυναικολόγο μαιευτήρα.",
+    title: doctor?.name
+      ? { absolute: `${doctor.name}${doctor.title ? ` - ${doctor.title}` : ""} | Ιατρείο Καλαμάτα` }
+      : "Ο Ιατρός",
+    description: doctor?.bio?.slice(0, 160) ?? "Γνωρίστε τον ειδικό γυναικολόγο μαιευτήρα στην Καλαμάτα.",
     openGraph: {
       title: doctor?.name ? `${doctor.name} | ${doctor.title}` : "Ο Ιατρός",
       description: doctor?.bio?.slice(0, 160) ?? "",

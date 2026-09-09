@@ -8,14 +8,9 @@ import {
 
 const BASE_URL = (process.env.NEXT_PUBLIC_DOMAIN || "http://localhost:3000").replace(/\/$/, "");
 
-export async function generateSitemaps() {
-  return [{ id: 0 }, { id: 1 }, { id: 2 }];
-}
-
-export default async function sitemap({ id }: { id: number }): Promise<MetadataRoute.Sitemap> {
-  if (id === 1) return servicesSitemap();
-  if (id === 2) return articlesSitemap();
-  return mainSitemap();
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [services, articles] = await Promise.all([servicesSitemap(), articlesSitemap()]);
+  return [...mainSitemap(), ...services, ...articles];
 }
 
 function mainSitemap(): MetadataRoute.Sitemap {

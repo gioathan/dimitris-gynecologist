@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   },
   description: "Εξειδικευμένος Μαιευτήρας - Γυναικολόγος στην Καλαμάτα. Προγεννητικός έλεγχος, γυναικολογική εξέταση, υπερηχογράφημα, κολποσκόπηση.",
   robots: { index: true, follow: true },
+  verification: {
+    google: "AR4vj7DgQ6S57eyLK69jszavr8mdtl-8t7NoXZb7o7E",
+  },
 };
 
 function normalizeSocialUrl(value: string) {

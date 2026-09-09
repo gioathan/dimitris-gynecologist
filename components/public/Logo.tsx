@@ -16,7 +16,7 @@ export default function Logo({ showText = false, textDark = false, circled = fal
       {showText && (
         <div className="leading-tight">
           <p className={`text-xs font-bold tracking-widest ${textDark ? "text-on-surface" : "text-white"}`}>Δημήτριος Ελ. Χριστακόπουλος MD,MSc</p>
-          <p className={`text-xs font-extrabold tracking-tight ${textDark ? "text-on-surface-variant" : "text-white"}`}>Μαιευτήρας-Γυναικολόγος Χειρουργός</p>
+          <p className={`text-xs font-extrabold tracking-tight ${textDark ? "text-on-surface-variant" : "text-white"}`}>Μαιευτήρας-Χειρουργός Γυναικολόγος</p>
         </div>
       )}
     </div>

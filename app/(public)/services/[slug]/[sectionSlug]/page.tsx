@@ -88,7 +88,7 @@ export default async function SectionDetailPage({ params }: Props) {
           <span className="material-symbols-outlined text-base">arrow_back</span>
           {section.service.title}
         </Link>
-        <h1 className="text-3xl font-extrabold text-on-surface leading-tight tracking-tight mb-3">
+        <h1 className="text-2xl lg:text-4xl font-extrabold text-on-surface leading-tight tracking-tight mb-3">
           {section.title}
         </h1>
         <div className="w-12 h-1 bg-primary rounded-full mb-5" />

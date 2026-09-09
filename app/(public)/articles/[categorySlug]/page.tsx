@@ -44,7 +44,7 @@ export default async function CategoryArticlesPage({ params }: Props) {
             <span className="material-symbols-outlined text-base">arrow_back</span>
             Άρθρα & Νέα
           </Link>
-          <h1 className="text-4xl lg:text-5xl font-extrabold text-on-surface leading-tight tracking-tight mb-3">
+          <h1 className="text-2xl lg:text-4xl font-extrabold text-on-surface leading-tight tracking-tight mb-3">
             {category.title}
           </h1>
           <div className="w-12 h-1 bg-secondary rounded-full" />

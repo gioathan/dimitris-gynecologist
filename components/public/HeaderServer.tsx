@@ -28,6 +28,7 @@ export default async function HeaderServer() {
     <Header
       navItems={navItems}
       instagram={settings.instagram || null}
+      facebook={settings.facebook || null}
     />
   );
 }

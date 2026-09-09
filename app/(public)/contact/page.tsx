@@ -30,7 +30,7 @@ export default async function ContactPage() {
 
         {/* ── Left: info ──────────────────────────────────── */}
         <div>
-          <h1 className="text-4xl lg:text-5xl font-extrabold text-on-surface mb-4 tracking-tight">
+          <h1 className="text-2xl lg:text-4xl font-extrabold text-on-surface mb-4 tracking-tight">
             Επικοινωνήστε μαζί μας
           </h1>
           <p className="text-on-surface-variant text-base leading-relaxed mb-12 max-w-md">

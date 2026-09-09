@@ -120,7 +120,7 @@ export default async function ArticleDetailPage({ params }: Props) {
           </p>
         )}
 
-        <h1 className="text-3xl font-extrabold text-on-surface leading-tight tracking-tight mb-4">
+        <h1 className="text-2xl lg:text-4xl font-extrabold text-on-surface leading-tight tracking-tight mb-4">
           {article.title}
         </h1>
 

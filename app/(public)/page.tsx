@@ -4,6 +4,7 @@ import {
   getArticleCategories,
   getDoctorProfile,
   getSiteSettings,
+  getClinicImages,
 } from "@/lib/data/public";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,12 +27,13 @@ const CATEGORY_BG: string[] = [
 ];
 
 export default async function HomePage() {
-  const [homepage, services, categories, doctor, settings] = await Promise.all([
+  const [homepage, services, categories, doctor, settings, clinicImages] = await Promise.all([
     getHomepageContent(),
     getAllServices(),
     getArticleCategories(),
     getDoctorProfile(),
     getSiteSettings(),
+    getClinicImages(),
   ]);
 
   const hoursItems = [
@@ -39,17 +41,19 @@ export default async function HomePage() {
     { label: "Σάβ – Κυρ", value: settings.hours_sat_sun },
   ].filter((h) => h.value);
 
+  const clinicImage = clinicImages[0];
+
   return (
     <>
       {/* ── Hero ────────────────────────────────────────────── */}
       <section className="px-6 pt-8 pb-12 lg:pt-10 lg:pb-16 overflow-hidden bg-surface">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-6 items-center">
           {/* Text */}
           <div className="relative z-10">
             <span className="text-primary font-bold tracking-widest uppercase text-xs mb-3 block">
               Καλώς ήρθατε στη φροντίδα σας
             </span>
-            <h1 className="text-4xl lg:text-6xl font-extrabold text-on-surface leading-tight tracking-tight mb-3">
+            <h1 className="text-2xl lg:text-4xl font-extrabold text-on-surface leading-tight tracking-tight mb-3 whitespace-pre-line">
               {homepage?.hero_title || "Εξειδικευμένη Μαιευτική & Γυναικολογία"}
             </h1>
             {homepage?.hero_subtitle && (
@@ -107,7 +111,7 @@ export default async function HomePage() {
               <span className="text-primary font-bold tracking-widest uppercase text-xs mb-3 block">
                 Ο Ιατρός
               </span>
-              <h2 className="text-3xl lg:text-4xl font-extrabold text-on-surface leading-tight tracking-tight mb-2">
+              <h2 className="text-2xl lg:text-4xl font-extrabold text-on-surface leading-tight tracking-tight mb-2">
                 {doctor.name}
               </h2>
               <p className="text-on-secondary-container font-semibold mb-5">{doctor.title}</p>
@@ -143,13 +147,14 @@ export default async function HomePage() {
 
       {/* ── Clinic preview ──────────────────────────────────── */}
       {(hoursItems.length > 0 || settings.address) && (
-        <section className="py-16 lg:py-20 px-6 bg-secondary">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        <section className="py-16 lg:py-20 px-6 bg-secondary overflow-hidden">
+          {/* Mobile layout: title/CTA, then photo, then hours */}
+          <div className="lg:hidden max-w-7xl mx-auto flex flex-col gap-4">
             <div>
               <span className="text-white/60 font-bold tracking-widest uppercase text-xs mb-3 block">
                 Το Ιατρείο
               </span>
-              <h2 className="text-3xl lg:text-4xl font-extrabold text-white leading-tight tracking-tight mb-2">
+              <h2 className="text-2xl font-extrabold text-white leading-tight tracking-tight mb-2">
                 Σύγχρονο Ιατρείο στην Καλαμάτα
               </h2>
               <div className="w-12 h-1 bg-white/40 rounded-full mb-7" />
@@ -161,6 +166,19 @@ export default async function HomePage() {
                 <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
               </Link>
             </div>
+
+            {clinicImage && (
+              <div className="relative w-full aspect-[4/3] rounded-[2rem] overflow-hidden">
+                <Image
+                  src={clinicImage.url}
+                  alt={clinicImage.alt ?? "Ιατρείο"}
+                  fill
+                  className="object-cover"
+                  sizes="100vw"
+                />
+              </div>
+            )}
+
             <div className="flex flex-col gap-4">
               {hoursItems.length > 0 && (
                 <p className="text-white/60 font-bold tracking-widest uppercase text-xs">
@@ -186,6 +204,63 @@ export default async function HomePage() {
               )}
             </div>
           </div>
+
+          {/* Desktop layout: photo left, compact title + hours + CTA right */}
+          <div className={`hidden lg:grid max-w-7xl mx-auto items-center ${clinicImage ? "lg:grid-cols-2 gap-10" : ""}`}>
+            {clinicImage && (
+              <div className="relative w-full aspect-[4/3] rounded-[2rem] overflow-hidden">
+                <Image
+                  src={clinicImage.url}
+                  alt={clinicImage.alt ?? "Ιατρείο"}
+                  fill
+                  className="object-cover"
+                  sizes="50vw"
+                />
+              </div>
+            )}
+
+            <div className={clinicImage ? "" : "max-w-2xl mx-auto text-center"}>
+              <span className="text-white/60 font-bold tracking-widest uppercase text-xs mb-2 block">
+                Το Ιατρείο
+              </span>
+              <h2 className="text-2xl font-extrabold text-white leading-tight tracking-tight mb-4">
+                Σύγχρονο Ιατρείο στην Καλαμάτα
+              </h2>
+
+              <div className={`flex flex-col gap-3 mb-6 ${clinicImage ? "" : "items-center"}`}>
+                {hoursItems.length > 0 && (
+                  <p className="text-white/60 font-bold tracking-widest uppercase text-xs">
+                    Ωράριο Γραμματείας
+                  </p>
+                )}
+                {hoursItems.map((h) => (
+                  <div key={h.label} className={`bg-white/10 rounded-2xl px-6 py-4 flex justify-between items-center gap-6 ${clinicImage ? "w-full" : "w-full max-w-sm"}`}>
+                    <span className="text-white/70 text-sm font-medium">{h.label}</span>
+                    <span className="text-white font-bold text-sm">{h.value}</span>
+                  </div>
+                ))}
+                {hoursItems.length > 0 && (
+                  <p className={`text-white/60 text-xs italic ${clinicImage ? "border-l-2 border-white/20 pl-3" : ""}`}>
+                    Ο ιατρός δέχεται αποκλειστικά κατόπιν ραντεβού.
+                  </p>
+                )}
+                {settings.address && (
+                  <div className={`bg-white/10 rounded-2xl px-6 py-4 flex items-center gap-3 ${clinicImage ? "w-full" : "w-full max-w-sm"}`}>
+                    <span className="material-symbols-outlined text-white/70 text-[18px] shrink-0">location_on</span>
+                    <span className="text-white text-sm font-medium">{settings.address}</span>
+                  </div>
+                )}
+              </div>
+
+              <Link
+                href="/clinic"
+                className="inline-flex items-center gap-2 text-white font-bold text-sm uppercase tracking-wider hover:gap-3 transition-all"
+              >
+                Επισκεφθείτε το Ιατρείο
+                <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+              </Link>
+            </div>
+          </div>
         </section>
       )}
 
@@ -199,7 +274,7 @@ export default async function HomePage() {
                 <div className="w-12 h-1 bg-secondary rounded-full" />
               </div>
               <Link href="/services" className="text-primary font-bold text-sm uppercase tracking-wider">
-                Δείτε Όλες
+                Δείτε Περισσότερα
               </Link>
             </div>
 
@@ -227,7 +302,7 @@ export default async function HomePage() {
                 <div className="w-12 h-1 bg-secondary rounded-full" />
               </div>
               <Link href="/articles" className="text-primary font-bold text-sm uppercase tracking-wider">
-                Δείτε Όλα
+                Δείτε Περισσότερα
               </Link>
             </div>
             {/* Mobile: compact 2-col grid. Desktop: full cards */}

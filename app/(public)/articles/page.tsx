@@ -32,7 +32,7 @@ export default async function ArticlesPage() {
           <span className="text-primary font-bold tracking-widest uppercase text-xs mb-3 block">
             Γνώση & Ενημέρωση
           </span>
-          <h1 className="text-4xl lg:text-5xl font-extrabold text-on-surface leading-tight tracking-tight mb-3">
+          <h1 className="text-2xl lg:text-4xl font-extrabold text-on-surface leading-tight tracking-tight mb-3">
             Άρθρα & Νέα
           </h1>
           <div className="w-12 h-1 bg-secondary rounded-full" />

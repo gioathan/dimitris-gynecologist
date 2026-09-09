@@ -1,7 +1,7 @@
 import { getSiteSettings, getClinicImages, getFacilities } from "@/lib/data/public";
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import ClinicGallery from "@/components/public/ClinicGallery";
 
 export const revalidate = 3600;
 
@@ -41,65 +41,34 @@ export default async function ClinicPage() {
         <span className="text-primary font-bold tracking-widest uppercase text-xs mb-3 block">
           Καλώς ήρθατε
         </span>
-        <h1 className="text-4xl lg:text-5xl font-extrabold text-on-surface leading-tight tracking-tight mb-6">
+        <h1 className="text-2xl lg:text-4xl font-extrabold text-on-surface leading-tight tracking-tight mb-6">
           Σύγχρονο Ιατρείο στην Καλαμάτα
         </h1>
 
-        {images.length > 0 ? (
-          <>
-            {/* Desktop gallery — first image 2×2, rest fill uniformly */}
-            <div className="hidden lg:grid lg:grid-cols-4 gap-3" style={{ gridAutoRows: '160px' }}>
-              {images.map((img, i) => (
-                <div
-                  key={img.id}
-                  className={`relative rounded-2xl overflow-hidden ${i === 0 ? 'col-span-2 row-span-2' : ''}`}
-                >
-                  <Image
-                    src={img.url}
-                    alt={img.alt ?? "Ιατρείο"}
-                    fill
-                    className="object-cover"
-                    sizes={i === 0 ? '50vw' : '25vw'}
-                    priority={i === 0}
-                  />
-                </div>
-              ))}
-            </div>
+        <ClinicGallery images={images} />
+      </section>
 
-            {/* Mobile gallery */}
-            <div className="lg:hidden grid grid-cols-2 gap-3">
-              <div className="col-span-2 relative aspect-video rounded-2xl overflow-hidden">
-                <Image
-                  src={images[0].url}
-                  alt={images[0].alt ?? "Ιατρείο"}
-                  fill
-                  className="object-cover"
-                  sizes="100vw"
-                  priority
-                />
-              </div>
-              {images.slice(1).map((img) => (
-                <div key={img.id} className="relative aspect-square rounded-2xl overflow-hidden">
-                  <Image
-                    src={img.url}
-                    alt={img.alt ?? "Ιατρείο"}
-                    fill
-                    className="object-cover"
-                    sizes="50vw"
-                  />
-                </div>
-              ))}
-            </div>
-          </>
-        ) : (
-          <div className="w-full h-48 bg-surface-container rounded-2xl flex items-center justify-center">
-            <span className="material-symbols-outlined text-primary text-5xl opacity-40">local_hospital</span>
-          </div>
-        )}
+      {/* ── Philosophy ──────────────────────────────────────── */}
+      <section className="bg-surface-container-low py-8 lg:py-10 px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <span
+            className="material-symbols-outlined text-secondary text-4xl mb-5 block"
+            style={{ fontVariationSettings: "'FILL' 1" }}
+          >
+            spa
+          </span>
+          <p className="text-lg lg:text-xl text-on-surface-variant leading-relaxed font-light italic">
+            "Το ιατρείο είναι χώρος, όπου σε κάθε γυναίκα προσφέρεται ασφάλεια,
+            εμπιστοσύνη και σεβασμός με επιστημονική κατάρτιση και εξειδίκευση"
+          </p>
+          <p className="text-primary font-bold text-sm uppercase tracking-widest mt-5">
+            Δημήτριος Ελ. Χριστακόπουλος MD, MSc
+          </p>
+        </div>
       </section>
 
       {/* ── Facilities + Hours ──────────────────────────────── */}
-      <section className="px-6 mb-12 grid grid-cols-1 gap-6">
+      <section className="px-6 pt-8 mb-12 grid grid-cols-1 gap-6">
         {/* Facilities */}
         <div className="bg-surface-container-low rounded-[2rem] p-7">
           <h2 className="text-2xl font-bold mb-7 text-on-surface">Εγκαταστάσεις</h2>

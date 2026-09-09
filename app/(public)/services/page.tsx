@@ -33,13 +33,13 @@ export default async function ServicesPage() {
           <span className="text-primary font-bold tracking-widest uppercase text-xs mb-3 block">
             Τι προσφέρουμε
           </span>
-          <h1 className="text-4xl lg:text-5xl font-extrabold text-on-surface leading-tight tracking-tight mb-3">
+          <h1 className="text-2xl lg:text-4xl font-extrabold text-on-surface leading-tight tracking-tight mb-3">
             Οι Υπηρεσίες μας
           </h1>
           <div className="w-12 h-1 bg-secondary rounded-full" />
           <p className="text-on-surface-variant text-base leading-relaxed mt-5 max-w-xl">
             Προσφέρουμε ολοκληρωμένη μαιευτική και γυναικολογική φροντίδα, εξατομικευμένη για κάθε
-            στάδιο της γυναικείας υγείας.
+            στάδιο της γυναικείας ζωής.
           </p>
         </div>
       </section>

@@ -11,6 +11,7 @@ const SETTING_LABELS: Record<string, string> = {
   phone_mobile: "Mobile Phone",
   email: "Email",
   instagram: "Instagram (username or full URL)",
+  facebook: "Facebook URL",
   hours_mon_fri: "Hours (Mon–Fri)",
   hours_sat_sun: "Hours (Sat–Sun)",
   google_maps_embed: "Google Maps Embed URL",

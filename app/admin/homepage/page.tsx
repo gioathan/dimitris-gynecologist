@@ -81,8 +81,13 @@ export default function HomepagePage() {
             )}
           </Form.Item>
 
-          <Form.Item label="Hero Title" name="hero_title" rules={[{ required: true }]}>
-            <Input style={inputStyle} />
+          <Form.Item
+            label="Hero Title"
+            name="hero_title"
+            rules={[{ required: true }]}
+            extra="Press Enter for a line break. Each line always stays on its own line, on every screen size."
+          >
+            <Input.TextArea rows={2} style={inputStyle} />
           </Form.Item>
 
           <Form.Item label="Hero Subtitle" name="hero_subtitle">

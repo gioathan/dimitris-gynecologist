@@ -355,24 +355,27 @@ export default async function HomePage() {
   );
 }
 
-// Enter (\n) breaks the line on every device; "||" breaks it only below the lg breakpoint.
+// Enter (\n) breaks on every device; "||" breaks only on mobile; "|" breaks only on desktop.
+// "||" is matched before "|" so a double pipe is never split into two single ones.
 function renderHeroTitle(title: string) {
-  return title.split("\n").map((line, lineIndex) => (
-    <Fragment key={lineIndex}>
-      {lineIndex > 0 && <br />}
-      {line.split("||").map((part, partIndex) => (
-        <Fragment key={partIndex}>
-          {partIndex > 0 && (
-            <>
-              {" "}
-              <br className="lg:hidden" />
-            </>
-          )}
-          {part.trim()}
+  return title.split(/(\n|\|\||\|)/).map((token, i) => {
+    if (token === "\n") return <br key={i} />;
+    if (token === "||")
+      return (
+        <Fragment key={i}>
+          {" "}
+          <br className="lg:hidden" />
         </Fragment>
-      ))}
-    </Fragment>
-  ));
+      );
+    if (token === "|")
+      return (
+        <Fragment key={i}>
+          {" "}
+          <br className="hidden lg:inline" />
+        </Fragment>
+      );
+    return <Fragment key={i}>{token.trim()}</Fragment>;
+  });
 }
 
 function ServiceCard({ service }: { service: { id: string; slug: string; icon: string | null; title: string; excerpt: string | null } }) {

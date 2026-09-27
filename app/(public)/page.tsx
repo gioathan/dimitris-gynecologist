@@ -8,6 +8,7 @@ import {
 } from "@/lib/data/public";
 import Image from "next/image";
 import Link from "next/link";
+import { Fragment } from "react";
 import type { Metadata } from "next";
 
 export const revalidate = 3600;
@@ -58,8 +59,8 @@ export default async function HomePage() {
             <span className="text-primary font-bold tracking-widest uppercase text-xs mb-3 block">
               Καλώς ήρθατε στη φροντίδα σας
             </span>
-            <h1 className="text-2xl lg:text-4xl font-extrabold text-on-surface leading-tight tracking-tight mb-3 whitespace-pre-line">
-              {homepage?.hero_title || "Εξειδικευμένη Μαιευτική & Γυναικολογία"}
+            <h1 className="text-2xl lg:text-4xl font-extrabold text-on-surface leading-tight tracking-tight mb-3">
+              {renderHeroTitle(homepage?.hero_title || "Εξειδικευμένη Μαιευτική & Γυναικολογία")}
             </h1>
             {homepage?.hero_subtitle && (
               <p className="text-primary font-semibold text-lg mb-3">{homepage.hero_subtitle}</p>
@@ -275,7 +276,7 @@ export default async function HomePage() {
           <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-end mb-10">
               <div>
-                <h2 className="text-2xl lg:text-3xl font-bold text-on-surface mb-2">Οι Υπηρεσίες μας</h2>
+                <h2 className="text-2xl lg:text-3xl font-bold text-on-surface mb-2">Υπηρεσίες</h2>
                 <div className="w-12 h-1 bg-secondary rounded-full" />
               </div>
               <Link href="/services" className="text-primary font-bold text-sm uppercase tracking-wider">
@@ -352,6 +353,26 @@ export default async function HomePage() {
       )}
     </>
   );
+}
+
+// Enter (\n) breaks the line on every device; "||" breaks it only below the lg breakpoint.
+function renderHeroTitle(title: string) {
+  return title.split("\n").map((line, lineIndex) => (
+    <Fragment key={lineIndex}>
+      {lineIndex > 0 && <br />}
+      {line.split("||").map((part, partIndex) => (
+        <Fragment key={partIndex}>
+          {partIndex > 0 && (
+            <>
+              {" "}
+              <br className="lg:hidden" />
+            </>
+          )}
+          {part.trim()}
+        </Fragment>
+      ))}
+    </Fragment>
+  ));
 }
 
 function ServiceCard({ service }: { service: { id: string; slug: string; icon: string | null; title: string; excerpt: string | null } }) {

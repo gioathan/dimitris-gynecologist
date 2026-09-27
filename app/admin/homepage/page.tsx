@@ -85,7 +85,7 @@ export default function HomepagePage() {
             label="Hero Title"
             name="hero_title"
             rules={[{ required: true }]}
-            extra="Press Enter for a line break. Each line always stays on its own line, on every screen size."
+            extra='Press Enter for a line break on every device. Use "||" for a line break that only applies on mobile (on desktop it renders as a normal space).'
           >
             <Input.TextArea rows={2} style={inputStyle} />
           </Form.Item>

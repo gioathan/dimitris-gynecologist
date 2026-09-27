@@ -61,7 +61,7 @@ export default async function ClinicPage() {
             "Το ιατρείο είναι χώρος, όπου σε κάθε γυναίκα προσφέρεται ασφάλεια,
             εμπιστοσύνη και σεβασμός με επιστημονική κατάρτιση και εξειδίκευση"
           </p>
-          <p className="text-primary font-bold text-sm uppercase tracking-widest mt-5">
+          <p className="text-primary font-bold text-xs tracking-wide lg:text-sm lg:tracking-widest uppercase mt-5">
             Δημήτριος Ελ. Χριστακόπουλος MD, MSc
           </p>
         </div>
